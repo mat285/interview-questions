@@ -1,0 +1,66 @@
+You run the seating system for a major airline. You are given a seating configuration of a plane and a set of reservations to seat onto the plan. This seating plan consists of a number of rows, and the grouping of seats in each row. Reservations consist of a group of people that would like to sit together. Assuming that all reservations are will fit into a single group of seats in a row, assign the seats for the reservations to minimize the number of reservations that cannot be seated together.
+
+Return the minimum number of reservations that must be split up to accomadate the seating.
+
+The total number of passengers will never exceed the number of seats on the plane.
+
+For the first iteration there is only one cabin, "Economy". We can extend to more cabins in the future.
+
+Data Model:
+
+type Row []int // each entry in row denotes a grouping of seats i.e [2,3,2] -> group of 2, aisle, group of 3, aisle, group of 2
+
+type Cabin struct {
+	Rows []int	
+}
+
+type CabinConfig {
+	Cabins map[string]Cabin
+}
+
+type Reservation struct {
+	ID string
+	Class string
+	People int
+}
+
+
+
+Example:
+
+configuration = {
+	Cabins: {
+		"Economy": []Row{
+			[
+				2,3,2
+			],
+		}
+	}
+}
+
+reservations = [
+	{
+		ID: "PNR1"
+		Class: "Economy",
+		People: 3,
+	},
+	{
+		ID: "PNR2"
+		Class: "Economy",
+		People: 3,
+	},
+	{
+		ID: "PNR3"
+		Class: "Economy",
+		People: 2,
+	},
+]
+
+
+Output: 1
+
+Explanation: We can seat the first reservation of 3 people, but must split the second. The others can be seated together without issue
+
+Seating arrangement:
+
+PNR3-1,PNR2-1, _ , PNR1-1,PNR1-2,PNR1-3, _ , PNR3-1,PNR3-2
